@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+
+{% if session["username"] == user.username %}
+
+<h3 class="text-secondary ml-3 mt-2">Hello, {{user.username}}.</h3>
+
+  {% else %}
+
+    <h3>{{user.username}}</h3>
+
+{% endif %}
+<div class="row ml-3">
+  <div class="col-sm-2"><b>Username:</b></div>
+  <div class="col-8">{{ user.username }}</div>
+</div>
+<div class="row ml-3">
+  <div class="col-sm-2"><b>Email:</b></div>
+  <div class="col-8">{{ user.email }}</div>
+</div>
+<div class="row ml-3">
+  <div class="col-sm-2"><b>Name:</b></div>
+  <div class="col-8">{{user.first_name}} {{user.last_name}}</div>
+</div>
+
+  {% if user.feedback %}
+
+
+  <ul class="list-group list-group-flush mt-3">
+    <li class="list-group-item list-group-item">
+    <p class="mt-0 mb-0 text-primary ml-2">Feedback</p>
+  </li>
+  
+    {% for f in user.feedback %}
+    <li class="list-group-item">
+    
+      <p class="mb-1 ml-2"><b>{{ f.title }}</b></p>
+      <p class="feedback mb-1 ml-2">{{ f.content }}</p>
+  
+  
+  
+      {% if session['username'] == user.username %}
+  
+      <div class="feedback ml-2">
+        <a href="/feedback/{{ f.id }}/update" class="small text-primary">Edit</a>
+        <a href="/feedback/{{ f.id }}/delete" class="small text-danger ml-3">Delete</a>
+      </div>
+  
+      {% endif %}
+      </li>
+  {% endfor %}
+  </ul>
+
+  {% endif %}
+
+{% endblock %}

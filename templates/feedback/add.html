@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Feedback Form{% endblock %}
+
+{% block content %}
+
+    {% if session['username'] == username %}
+
+    <form action="/users/{{ username }}/feedback/add" class="ml-3 mt-3" method="POST">
+    
+        {{ form.hidden_tag() }}
+        
+        {% for field in form
+            if field.widget.input_type != 'hidden' %}
+    
+            <div class="form-group row">
+              <div class="col-10">
+                {{ field.label }}
+                {{ field(class="form-control") }}
+              </div>
+          
+               {% for error in field.errors %}
+                 {{ error }}
+               {% endfor %}
+             </div>
+          
+           {% endfor %}
+            <button class="btn btn-small btn-primary" type="submit">Update</button>
+          </form>
+
+    {% endif %}
+
+{% endblock %}
