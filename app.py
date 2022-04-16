@@ -73,7 +73,7 @@ def show_login_form():
     return render_template('users/login.html', form=form)
 
 @app.route('/users/<username>')
-def show_user_details_page(username):
+def user_profile(username):
     """Show user details, if logged in"""
 
     user = User.query.get(username)

@@ -13,13 +13,17 @@
 
         {% if "username" in session %}
 
-            <a class="nav-item nav-link" href="/users/{{session["username"]}}">My Profile</a>
+            {% with username = session["username"]%}
+
+            <a class="nav-item nav-link" href="{{ url_for('user_profile', username=username )}}">My Profile</a>
 
             <a class="nav-item nav-link" href="/logout">Logout</a>
 
-            <a class="nav-item nav-link" href="/users/{{ session["username"] }}/feedback/add">Add Feedback</a>
+            <a class="nav-item nav-link" href="{{ url_for('add_feedback', username=username )}}">Add Feedback</a>
 
-            <a class="nav-item nav-link text-danger" href="/users/{{ session["username"] }}/delete">Delete Account</a>
+            <a class="nav-item nav-link text-danger" href="{{ url_for('delete_user', username=username )}}">Delete Account</a>
+
+            {% endwith %}
 
         {% else %}
 
