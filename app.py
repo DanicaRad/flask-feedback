@@ -46,7 +46,7 @@ def show_register_form():
 
         return redirect(f'/users/{user.username}')
 
-    return render_template('users/register.html', form=form)
+    return render_template('users/form.html', form=form, action="register")
 
 @app.route('/login', methods=['GET', 'POST'])
 def show_login_form():
@@ -66,11 +66,10 @@ def show_login_form():
 
         elif User.query.get(form.username.data):
             form.password.errors = ["Invalid password."]
-            # form.username.errors = ["Invalid login credentials."]
         else: 
             form.username.errors =["Invalid username."]
 
-    return render_template('users/login.html', form=form)
+    return render_template('users/form.html', form=form, action="login")
 
 @app.route('/users/<username>')
 def user_profile(username):
@@ -131,7 +130,7 @@ def add_feedback(username):
 
             return redirect(f'/users/{user.username}')
         
-        return render_template('feedback/add.html', form=form, username=username)
+        return render_template('feedback.html', form=form, username=username, action=[f"/users/{ username }/feedback/add", "Add"])
 
     else:
         flash(f"You must be logged in as {username} to add feedback", "alert alert-danger")
@@ -158,7 +157,7 @@ def edit_feedback(feedback_id):
         form.title.data = feedback.title
         form.content.data = feedback.content
 
-        return render_template('feedback/update.html', form=form, feedback=feedback)
+        return render_template('feedback.html', form=form, username=feedback.username, action=[f"/feedback/{ feedback.id }/update", "Update"])
 
     flash(f"Only {feedback.username} can update this feedback.")
     return redirect(f'/users/{feedback.username}')

@@ -4,9 +4,9 @@
 
 {% block content %}
 
-    {% if session['username'] == feedback.username %}
+    {% if session['username'] == username %}
 
-    <form action="/feedback/{{ feedback.id }}/update" method="POST" class="ml-3 mt-3">
+    <form action="{{ action[0] }}" method="POST" class="ml-3 mt-3">
     
         {{ form.hidden_tag() }}
         
@@ -24,9 +24,9 @@
            {{ error }}
          {% endfor %}
        </div>
-    
      {% endfor %}
-      <button class="btn btn-small btn-primary" type="submit">Update</button>
+     
+        <button class="btn btn-small btn-primary" type="submit">{{ action[1] }}</button>
     </form>
 
     {% endif %}
