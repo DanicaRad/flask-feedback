@@ -101,7 +101,7 @@ def delete_user(username):
         db.session.delete(user)
         db.session.commit()
 
-        session.pop(username)
+        session.pop("username")
 
         flash("User Account Deleted.", "alert alert-warning")
         return redirect('/')

@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+from wtforms.validators import Email
 
 bcrypt = Bcrypt()
 
@@ -19,15 +20,15 @@ class User(db.Model):
         u = self
         return f"<username={u.username} password={u.password} email={u.email} first_name={u.first_name} last_name={u.last_name}>"
 
-    username = db.Column(db.String(20), primary_key=True)
+    username = db.Column(db.String(20), primary_key=True, info={'label': 'Username'})
 
-    password = db.Column(db.Text, nullable=False)
+    password = db.Column(db.String, nullable=False, info={'label': 'Password'})
 
-    email = db.Column(db.String(50), nullable=False, unique=True)
+    email = db.Column(db.String(50), nullable=False, unique=True, info={'label': 'Email', 'validators': Email()})
 
-    first_name = db.Column(db.String(30), nullable=False)
+    first_name = db.Column(db.String(30), nullable=False, info={'label': 'First Name'})
 
-    last_name = db.Column(db.String(30), nullable=False)
+    last_name = db.Column(db.String(30), nullable=False, info={'label': 'Last Name'})
 
     feedback = db.relationship('Feedback', backref='user', cascade='all, delete')
 
